@@ -43,4 +43,7 @@
 
 - (instancetype)initWithReaderDocument:(ReaderDocument *)object;
 
+// CHANGED FHARTMANN: made method public
+- (void)showDocumentPage:(NSInteger)page;
+
 @end

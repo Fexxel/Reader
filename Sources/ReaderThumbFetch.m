@@ -69,9 +69,12 @@
 
 - (void)main
 {
-	CGImageRef imageRef = NULL; NSURL *thumbURL = [self thumbFileURL];
-
-	CGImageSourceRef loadRef = CGImageSourceCreateWithURL((__bridge CFURLRef)thumbURL, NULL);
+	CGImageRef imageRef = NULL;
+    
+    //FRAHAR: modefied framework as else images of different pdfs will be cached and will be used in other pdfs (our pdfs all have the same filename)
+    CGImageSourceRef loadRef = NULL;
+    NSURL *thumbURL = [self thumbFileURL];
+    //loadRef = CGImageSourceCreateWithURL((__bridge CFURLRef)thumbURL, NULL);
 
 	if (loadRef != NULL) // Load the existing thumb image
 	{
@@ -83,7 +86,9 @@
 	{
 		ReaderThumbRender *thumbRender = [[ReaderThumbRender alloc] initWithRequest:request]; // Create a thumb render operation
 
-		[thumbRender setQueuePriority:self.queuePriority]; [thumbRender setThreadPriority:(self.threadPriority - 0.1)]; // Priority
+		[thumbRender setQueuePriority:self.queuePriority];
+        
+        [thumbRender setThreadPriority:(self.threadPriority - 0.1)]; // Priority
 
 		if (self.isCancelled == NO) // We're not cancelled - so update things and add the render operation to the work queue
 		{

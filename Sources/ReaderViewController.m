@@ -417,6 +417,16 @@
 #endif // end of READER_DISABLE_IDLE Option
 }
 
+// CHANGED FHARTMANN: new method
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+#if (READER_ENABLE_THUMBS == FALSE) && (READER_STANDALONE == TRUE) && (READER_BOOKMARKS == FALSE)
+    [mainToolbar removeFromSuperview];
+#endif
+    [self updateContentViews:theScrollView];
+    [self showDocument];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
